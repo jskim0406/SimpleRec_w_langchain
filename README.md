@@ -9,8 +9,11 @@ pip install -r requirements.txt
 
 # USAGE
 ```bash
-streamlit run app_simple_rec.py
+streamlit run app.py
 ```
 
-# Dem
+# Demo
 https://github.com/jskim0406/SimpleRec_w_langchain/assets/63832233/fd2a77b3-dacf-4772-bfc5-604401b697f9
+
+
+# Contributor
