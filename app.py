@@ -1,8 +1,6 @@
-import argparse
 import databutton as db
 import streamlit as st 
-from langchain.llms import OpenAI
-from langchain.chains import LLMChain, SimpleSequentialChain
+from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate 
 
@@ -49,13 +47,18 @@ def main():
 
         st.markdown(
             """
-            **Blog post:** \n
-            [*Blog title*](URL)
-
-            **Code:** \n
-            [*Github*](https://github.com/jskim0406/SimpleRec_w_langchain.git)
+            **Code:**
+            [*Github Repo*](https://github.com/jskim0406/SimpleRec_w_langchain)
             """
         )
+
+    api_key = st.text_input(
+        "Enter Open AI Key.",
+        placeholder = "sk-...",
+        type="password"
+    )
+
+    st.warning("Enter your OPENAI API-KEY. If you don't have one Get your OpenAI API key from [here](https://platform.openai.com/account/api-keys).\n")
 
     mood = st.text_input(
         "Tell me how you feel right now. And press Enter.",
@@ -67,36 +70,29 @@ def main():
         placeholder = "K-pop"
     )
 
-    api_key = st.text_input(
-        "Enter Open AI Key.",
-        placeholder = "sk-...",
-        type="password"
-    )
-
     if api_key:
         chatopenai = ChatOpenAI(model_name=model, temperature=temperature, openai_api_key=api_key)
-    else:
-        st.warning("Enter your OPENAI API-KEY. If you don't have one Get your OpenAI API key from [here](https://platform.openai.com/account/api-keys).\n")
-
-    if st.button("Hey ChatGPT. It's time to show us what you recommend."):
-
-        template="""
-        You've heard a friend talk about feeling like this.
-        Your friend says {mood}
-
-        You want to recommend a song for a friend.
-        Recommend songs within the {genre} genre that match your friend's mood.
-        """
-
-        prompt = PromptTemplate(
-            input_variables=["mood", "genre"],
-            template=template
-        )
-        chatchain = LLMChain(llm=chatopenai, prompt=prompt)
         
-        st.success(
-            chatchain({'mood': f'{mood}', 'genre': f'{genre}'})['text']
-        )
+    if st.button("Hey ChatGPT. It's time to show us what you recommend."):
+        
+        with st.spinner("Running to answer your question .."):
+            template="""
+            You've heard a friend talk about feeling like this.
+            Your friend says {mood}
+
+            You want to recommend a song for a friend.
+            Recommend songs within the {genre} genre that match your friend's mood.
+            """
+
+            prompt = PromptTemplate(
+                input_variables=["mood", "genre"],
+                template=template
+            )
+            chatchain = LLMChain(llm=chatopenai, prompt=prompt, verbose=True)
+                
+            st.success(
+                chatchain({'mood': f'{mood}', 'genre': f'{genre}'})['text']
+            )
 
 
 if __name__=='__main__':
