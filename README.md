@@ -13,7 +13,9 @@ streamlit run app.py
 ```
 
 # Demo
-https://github.com/jskim0406/SimpleRec_w_langchain/assets/63832233/fd2a77b3-dacf-4772-bfc5-604401b697f9
+- [Link to the Youtube Video](https://youtu.be/s_VpC5R4vYI)
+
+[<img width="1679" alt="song_rec_thumb" src="https://github.com/jskim0406/SimpleRec_w_langchain/assets/63832233/dbce1cc8-c945-4fa1-9891-c1c9e38a2878">](https://youtu.be/s_VpC5R4vYI)
 
 
 # Contributor
